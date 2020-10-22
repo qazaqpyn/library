@@ -36,6 +36,8 @@ function refresh() {
         const pagesTd = document.createElement('td');
         const readTd = document.createElement('td');
         const deleteTd = document.createElement("td");
+        const changeReadTd = document.createElement("td");
+        const changeBtn = document.createElement("button");
         const deleteBtn = document.createElement("button");
 
         nameTd.textContent = myLibrary[i].title;
@@ -43,13 +45,19 @@ function refresh() {
         pagesTd.textContent = myLibrary[i].pages;
         readTd.textContent = myLibrary[i].read;
         
+        changeReadTd.appendChild(changeBtn);
         deleteTd.appendChild(deleteBtn);
-        row.append(nameTd,authorTd,pagesTd,readTd,deleteTd);
+        row.append(nameTd,authorTd,pagesTd,readTd,changeReadTd,deleteTd);
         table.appendChild(row);
+        changeBtn.dataset.rowNumber = [i];
         deleteBtn.dataset.rowNumber=[i];
 
         deleteBtn.addEventListener('click',(e) => {
             myLibrary.splice(e.target.dataset.rowNumber,1)
+            refresh();
+        })
+        changeBtn.addEventListener('click',(e) => {
+            myLibrary[e.target.dataset.rowNumber].toggleRead();
             refresh();
         })
 
