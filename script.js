@@ -3,6 +3,7 @@ const table= document.querySelector("tbody");
 const form = document.querySelector("form");
 const btnNew = document.querySelector(".newBook");
 const btnAdd = document.querySelector(".addBook")
+let na = false;
 
 
 function Book(title, author, pages, read) {
@@ -28,39 +29,50 @@ Book.prototype.toggleRead = function() {
 
 //TODO: for looping over
 function refresh() {
-    table.innerHTML='';
-    for (let i=0;i<myLibrary.length; i++) {
-        const row = document.createElement("tr");
-        const nameTd = document.createElement('td');
-        const authorTd = document.createElement('td');
-        const pagesTd = document.createElement('td');
-        const readTd = document.createElement('td');
-        const deleteTd = document.createElement("td");
-        const changeReadTd = document.createElement("td");
-        const changeBtn = document.createElement("button");
-        const deleteBtn = document.createElement("button");
-
-        nameTd.textContent = myLibrary[i].title;
-        authorTd.textContent = myLibrary[i].author;
-        pagesTd.textContent = myLibrary[i].pages;
-        readTd.textContent = myLibrary[i].read;
-        
-        changeReadTd.appendChild(changeBtn);
-        deleteTd.appendChild(deleteBtn);
-        row.append(nameTd,authorTd,pagesTd,readTd,changeReadTd,deleteTd);
-        table.appendChild(row);
-        changeBtn.dataset.rowNumber = [i];
-        deleteBtn.dataset.rowNumber=[i];
-
-        deleteBtn.addEventListener('click',(e) => {
-            myLibrary.splice(e.target.dataset.rowNumber,1)
+    if (myLibrary.length!==0) {
+        table.innerHTML='';
+        for (let i=0;i<myLibrary.length; i++) {
+            const row = document.createElement("tr");
+            const nameTd = document.createElement('td');
+            const authorTd = document.createElement('td');
+            const pagesTd = document.createElement('td');
+            const readTd = document.createElement('td');
+            const deleteTd = document.createElement("td");
+            const changeReadTd = document.createElement("td");
+            const changeBtn = document.createElement("button");
+            const deleteBtn = document.createElement("button");
+    
+            nameTd.textContent = myLibrary[i].title;
+            authorTd.textContent = myLibrary[i].author;
+            pagesTd.textContent = myLibrary[i].pages;
+            readTd.textContent = myLibrary[i].read;
+            
+            changeReadTd.appendChild(changeBtn);
+            deleteTd.appendChild(deleteBtn);
+            row.append(nameTd,authorTd,pagesTd,readTd,changeReadTd,deleteTd);
+            table.appendChild(row);
+            changeBtn.dataset.rowNumber = [i];
+            deleteBtn.dataset.rowNumber=[i];
+    
+            deleteBtn.addEventListener('click',(e) => {
+                myLibrary.splice(e.target.dataset.rowNumber,1)
+                refresh();
+            })
+            changeBtn.addEventListener('click',(e) => {
+                myLibrary[e.target.dataset.rowNumber].toggleRead();
+                refresh();
+            })
+        }
+        // making N/A dissappear when adding new book
+        if (na && myLibrary.length > 0) {
+            myLibrary.splice(0,1);
+            na = false;
             refresh();
-        })
-        changeBtn.addEventListener('click',(e) => {
-            myLibrary[e.target.dataset.rowNumber].toggleRead();
-            refresh();
-        })
-
+        }
+        // showing N/A when there's no book
+    } else {
+        addBookToLibrary("N/A", "N/A", "N/A", "N/A");
+        na = true;
     }
 }
 
@@ -91,5 +103,5 @@ btnNew.addEventListener("click", () => {
     }
 }) 
 
-
-addBookToLibrary("how","me",123,true);
+refresh();
+// addBookToLibrary("how","me",123,true);
