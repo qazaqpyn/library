@@ -35,14 +35,24 @@ function refresh() {
         const authorTd = document.createElement('td');
         const pagesTd = document.createElement('td');
         const readTd = document.createElement('td');
+        const deleteTd = document.createElement("td");
+        const deleteBtn = document.createElement("button");
 
         nameTd.textContent = myLibrary[i].title;
         authorTd.textContent = myLibrary[i].author;
         pagesTd.textContent = myLibrary[i].pages;
         readTd.textContent = myLibrary[i].read;
-
-        row.append(nameTd,authorTd,pagesTd,readTd);
+        
+        deleteTd.appendChild(deleteBtn);
+        row.append(nameTd,authorTd,pagesTd,readTd,deleteTd);
         table.appendChild(row);
+        deleteBtn.dataset.rowNumber=[i];
+
+        deleteBtn.addEventListener('click',(e) => {
+            myLibrary.splice(e.target.dataset.rowNumber,1)
+            refresh();
+        })
+
     }
 }
 
@@ -52,7 +62,13 @@ btnAdd.addEventListener("click", () => {
     const addAuthor = document.querySelector("#addAuthor").value;
     const addPages = document.querySelector("#addPages").value;
     const addRead = document.querySelector("#addRead").value;
-    addBookToLibrary(addName, addAuthor, addPages, addRead);
+    if (addName && addAuthor && addPages && addRead) {
+        addBookToLibrary(addName, addAuthor, addPages, addRead);
+        form.reset()
+        form.classList.remove('nothidden');
+        form.classList.add("hidden");
+    }
+
 })
 
 
