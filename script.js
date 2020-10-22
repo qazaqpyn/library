@@ -1,7 +1,10 @@
 let myLibrary=[];
+const table= document.querySelector("tbody");
+const form = document.querySelector("form");
+const btnNew = document.querySelector(".newBook");
+const btnAdd = document.querySelector(".addBook")
 
-book3= new Book("iam", "2020", 232, true);
-myLibrary.push(book3);
+
 function Book(title, author, pages, read) {
     this.title=title;
     this.author=author;
@@ -9,32 +12,60 @@ function Book(title, author, pages, read) {
     this.read=read;
 }
 
-function addBookToLibrary() {
-    let title = prompt("Title of the book:");
-    let author= prompt("author of the book: ");
-    let pages = prompt("pages of the book: ");
-    let readYN = prompt("did you read that book? (y/n)");
-    let read;
-
-    if (readYN === "y" ){
-        read=true;
-    } else {
-        read = false;
-    }
-
-    const mybook= new Book(title, author,+pages,read);
+function addBookToLibrary(title,author,pages,read) {
+    const mybook= new Book(title, author,pages,read);
     myLibrary.push(mybook);
+    refresh();
+}
+
+Book.prototype.toggleRead = function() {
+    if (this.read) {
+        this.read=false;
+    } else {
+        this.read=true;
+    }
+}
+
+//TODO: for looping over
+function refresh() {
+    table.innerHTML='';
+    for (let i=0;i<myLibrary.length; i++) {
+        const row = document.createElement("tr");
+        const nameTd = document.createElement('td');
+        const authorTd = document.createElement('td');
+        const pagesTd = document.createElement('td');
+        const readTd = document.createElement('td');
+
+        nameTd.textContent = myLibrary[i].title;
+        authorTd.textContent = myLibrary[i].author;
+        pagesTd.textContent = myLibrary[i].pages;
+        readTd.textContent = myLibrary[i].read;
+
+        row.append(nameTd,authorTd,pagesTd,readTd);
+        table.appendChild(row);
+    }
 }
 
 
-const table= document.querySelector("table");
-
-myLibrary.forEach((item) => {
-    let tr = document.createElement('tr'); 
-    for( let i in item) {
-        let td = document.createElement('td');
-        td.textContent = item[i];
-        tr.appendChild(td);
-    }
-    table.appendChild(tr);
+btnAdd.addEventListener("click", () => {
+    const addName = document.querySelector("#addName").value;
+    const addAuthor = document.querySelector("#addAuthor").value;
+    const addPages = document.querySelector("#addPages").value;
+    const addRead = document.querySelector("#addRead").value;
+    addBookToLibrary(addName, addAuthor, addPages, addRead);
 })
+
+
+
+btnNew.addEventListener("click", () => {
+    if (form.classList.contains("hidden")) {
+        form.classList.remove("hidden");
+        form.classList.add("nothidden");
+    } else {
+        form.classList.remove("nothidden");
+        form.classList.add("hidden");
+    }
+}) 
+
+
+addBookToLibrary("how","me",123,true);

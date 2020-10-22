@@ -5,3 +5,11 @@ table, th, td {
 table {
     border-collapse: collapse;
 }
+
+.hidden {
+    display: none;
+}
+
+.nothidden {
+    display: block;
+}
