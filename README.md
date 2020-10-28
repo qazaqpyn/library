@@ -1,1 +1,1 @@
-# library; JS; constructors
+# library; JS; constructors; Web Storage API; localStorage
