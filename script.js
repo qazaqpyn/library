@@ -5,7 +5,6 @@ const btnNew = document.querySelector(".newBook");
 const btnAdd = document.querySelector(".addBook")
 let na = false;
 
-
 function Book(title, author, pages, read) {
     this.title=title;
     this.author=author;
@@ -41,6 +40,12 @@ function refresh() {
             const changeReadTd = document.createElement("td");
             const changeBtn = document.createElement("button");
             const deleteBtn = document.createElement("button");
+
+            changeBtn.classList.add('th-button');
+            deleteBtn.classList.add('th-button');
+            deleteBtn.textContent='X';
+            changeBtn.textContent='C'
+        
     
             nameTd.textContent = myLibrary[i].title;
             authorTd.textContent = myLibrary[i].author;
@@ -81,8 +86,16 @@ btnAdd.addEventListener("click", () => {
     const addName = document.querySelector("#addName").value;
     const addAuthor = document.querySelector("#addAuthor").value;
     const addPages = document.querySelector("#addPages").value;
-    const addRead = document.querySelector("#addRead").value;
+    let addRead = document.querySelector("#addRead").value;
+    
     if (addName && addAuthor && addPages && addRead) {
+
+        if (addRead==='true') {
+            addRead = true;
+        } else {
+            addRead = false;
+        }
+
         addBookToLibrary(addName, addAuthor, addPages, addRead);
         form.reset()
         form.classList.remove('nothidden');

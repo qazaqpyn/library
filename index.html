@@ -7,14 +7,15 @@
     <title>Document</title>
 </head>
 <body>
+    <h1 class="text">Library Database</h1>
     <table>
         <thead>
-            <tr>
-                <th>Name</th>
-                <th>Author</th>
-                <th>Pages</th>
-                <th colspan="2">did you read?</th>
-                <th>delete?</th>
+            <tr class="table-row">
+                <th class="table-data">Name</th>
+                <th class="table-data">Author</th>
+                <th class="table-data">Pages</th>
+                <th colspan="2" class="table-data">did you read?</th>
+                <th class="table-data">delete?</th>
             </tr>
         </thead>
         <tbody>
@@ -22,19 +23,28 @@
         </tbody>
     </table>
     <button class="newBook">NEW BOOK</button>
-    
-    <form class="hidden" onsubmit="return false">
-        <label for="bname">Name of the book</label>
-        <input type="text" name="bname" id="addName" >
-        <label for="bauthor"> Author of the book</label>
-        <input type="text" name="bauthor" id="addAuthor" >
-        <label for="bpages">Pages of the book</label>
-        <input type="text" name="bpages" id="addPages" >
-        <label for="bread">Have you read?</label>
-        <input type="text" name="bread" id="addRead" >
 
-        <button class="addBook"> Add new Book</button>
-    </form>
+    <div class="container">
+        <div class="content">
+            <form class="hidden" onsubmit="return false">
+                <label for="bname">Name of the book</label>
+                <input type="text" name="bname" id="addName" >
+                <label for="bauthor"> Author of the book</label>
+                <input type="text" name="bauthor" id="addAuthor" >
+                <label for="bpages">Pages of the book</label>
+                <input type="number" min="1" name="bpages" id="addPages" >
+                <label for="bread">Have you read?</label>
+                <select name="bread" id="addRead">
+                    <option value="false">false</option>
+                    <option value="true">true</option>
+                </select>
+                
+        
+                <button class="addBook"> Add new Book</button>
+            </form>
+
+        </div>
+    </div>    
     <script src="script.js"></script>
 </body>
 </html>
